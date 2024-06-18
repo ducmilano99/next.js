@@ -525,6 +525,11 @@ describe('Error overlay for hydration errors', () => {
     await session.waitForAndOpenRuntimeError()
     expect(await session.hasRedbox()).toBe(true)
 
+    expect(await session.getRedboxDescription()).toContain(
+      'In HTML, <script> cannot be a child of <html>.'
+    )
+    const pseudoHtml = await session.getRedboxComponentStack()
+    expect(pseudoHtml).toContain('<script>')
     await cleanup()
   })
 
